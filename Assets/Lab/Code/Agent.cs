@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Agent : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Agent : MonoBehaviour
     Color SelectedColour = Color.yellow;
 
     Color mDefaultColor;
+
+
+    Text DebugText;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +41,9 @@ public class Agent : MonoBehaviour
         mDefaultColor = mMR.material.color; //Save Default colour
 
         Selected = false;   //Set to default
+
+        DebugText = GetComponentInChildren<Text>();
+
     }
 
     bool mSelected = false;
@@ -61,6 +68,20 @@ public class Agent : MonoBehaviour
     public void SetDestination(Vector3 vPosition, Action vArrived)
     {
         mNMA.SetDestination(vPosition);
+
+    }
+
+    private void Update()
+    {
+        DebugText.text = string.Format("{0}", mNMA.pathStatus);
+        DebugText.text += "\n";
+        DebugText.text += string.Format("{0:f2}", mNMA.remainingDistance);
+
+    }
+
+    private void LateUpdate()
+    {
+        DebugText.transform.parent.LookAt(2 * transform.position - Camera.main.transform.position);
 
     }
 }

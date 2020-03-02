@@ -45,6 +45,7 @@ public class Pickup : MonoBehaviour
 
     void DealWithPickup(GameObject vPlayer)
     {
+        if (vPlayer.GetComponent<Agent>() == null) return;
         GM.Score += Score;
         Destroy(gameObject);
     }
