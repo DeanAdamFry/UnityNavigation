@@ -80,7 +80,7 @@ public class Agent : MonoBehaviour
     }
 
     private void LateUpdate()
-    {
+    {//Make Canvas face camera
         DebugText.transform.parent.LookAt(2 * transform.position - Camera.main.transform.position);
 
     }
