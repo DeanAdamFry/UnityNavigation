@@ -32,7 +32,6 @@ public class AutoTarget : MonoBehaviour
             do
             {
                 yield return new WaitForSeconds(0.5f);  //Check every 1/2 second
-                Debug.LogFormat("Sanity {0}", Time.time);
             } while (Time.time < tTimeOut);
             if (!mAgent.Selected)
             {

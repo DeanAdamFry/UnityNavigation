@@ -32,20 +32,17 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider vOtherCol)
     {
-        Debug.LogFormat("{1} Triggered by {0}", vOtherCol.gameObject.name,gameObject.name);
-
         DealWithPickup(vOtherCol.gameObject);   //Call pickup handler
     }
 
     private void OnCollisionEnter(Collision vOtherCol)
     {
-        Debug.LogFormat("{1} Collided with {0}", vOtherCol.gameObject.name,gameObject.name);
         DealWithPickup(vOtherCol.gameObject);   //Call pickup handler
     }
 
     void DealWithPickup(GameObject vPlayer)
     {
-        if (vPlayer.GetComponent<Agent>() == null) return;
+        if (vPlayer.GetComponent<AgentBase>() == null) return;
         GM.Score += Score;
         Destroy(gameObject);
     }

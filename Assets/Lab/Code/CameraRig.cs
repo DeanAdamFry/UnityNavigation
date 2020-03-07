@@ -25,19 +25,14 @@ public class CameraRig : MonoBehaviour
     [SerializeField]
     float MouseTumbleSpeed = 5;
 
-    Camera mCamera;
-
+ 
     Quaternion mStartRotation;
     Vector3 mStartPosition;
     float mStartHeight;
 
     private void Start()
     {
-        mCamera = GetComponent<Camera>();
-        if(mCamera==null) //If we have Camera use this, if not add one
-        {
-            mCamera = gameObject.AddComponent<Camera>();        //Add Camera with code
-        }
+
         mStartRotation = transform.rotation;
         mStartPosition = transform.position;    //Reset point
         mStartHeight = Height;
@@ -46,10 +41,6 @@ public class CameraRig : MonoBehaviour
     void LateUpdate()
     {
         ProcessCameraMove();
-        if(Input.GetMouseButtonDown(0))
-        {
-            SetDestination();
-        }
     }
 
     void    ProcessCameraMove()
@@ -85,38 +76,12 @@ public class CameraRig : MonoBehaviour
         }
     }
 
-    void SetDestination()
-    {
-        RaycastHit tHit;
-        Ray tRay = mCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(tRay, out tHit))
-        {
-            Debug.DrawRay(tRay.origin, tRay.direction, Color.red);
-            Agent tAgent = tHit.collider.GetComponent<Agent>(); //Did we hit an agent
-            if (tAgent != null)
-            {
-                tAgent.Selected = !tAgent.Selected;
-                Debug.Log(tHit.collider.name);
-            }
-            else
-            {
-                Agent[] tAgents = FindObjectsOfType<Agent>(); //Get all the agents in the scene
-                foreach (Agent tFoundAgent in tAgents)
-                {
-                    if (tFoundAgent.Selected)   //Command selected ones
-                    {
-                        tFoundAgent.SetDestination(tHit.point);
-                        tFoundAgent.Selected = false; //Deselect once its been commanded
-                    }
-                }
-            }
-        }
-    }
 
     private void Reset() //Reset Camera in case we get lost
     {
-        transform.rotation=mStartRotation;
-        transform.position=mStartPosition;    //Reset point
-        Height=mStartHeight;
+        transform.rotation = mStartRotation;
+        transform.position = mStartPosition;    //Reset point
+        Height = mStartHeight;
     }
+
 }
