@@ -46,6 +46,13 @@ public class AgentClicker : MonoBehaviour
     //This is passed as a delegate to SetDestination, it will let us know when we are there, we get called when Agent has interesting stuff to report
     public bool OnAgentResult(AgentBase vAgent, AgentBase.Result vResult, GameObject vGO) {
         Debug.LogFormat("Agent:{0} {1}", vAgent.name, vResult);
+
+        DebugText tDebug = vAgent.GetComponent<DebugText>();
+        if(tDebug!=null)
+        {
+            tDebug.Text = vResult.ToString();
+        }
+
         switch (vResult) {
             case AgentBase.Result.Arrived:
                 vAgent.Selected = false; //Deselect once its at the destination or stuck
