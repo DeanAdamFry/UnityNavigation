@@ -55,7 +55,7 @@
                 tRB = gameObject.AddComponent<Rigidbody>();
             }
             tRB.isKinematic = true; //Make it Kinematic so we can driver
-
+            
             mDefaultColor = mMR.material.color; //Save Default colour
 
             Selected = false;   //Set to default
