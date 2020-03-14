@@ -4,12 +4,14 @@ using UnityEngine;
 
 #pragma warning disable CS0649  //Stop the warning about no assignment, as it will be assigned in IDE
 
-public class Pickup : MonoBehaviour
+public class Pickup : MonoBehaviour, IClickable
 {
     public float Speed=360.0f;
 
     [SerializeField]
     int Score = 10;
+
+    float mTimeout;
 
 
     // Add RB & set it to Kinematic
@@ -26,7 +28,12 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, Speed * Time.deltaTime, 0);
+        if(mTimeout>=0) //Only spin for so long
+        {
+            transform.Rotate(0, Speed * Time.deltaTime, 0);
+            mTimeout -= Time.deltaTime;
+
+        }
     }
 
 
@@ -47,4 +54,12 @@ public class Pickup : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void Clicked(Ray vRay, RaycastHit vHit, bool VDown)
+    {
+        mTimeout = 5.0f;
+    }
+
+    public void Hover(Ray vRay, RaycastHit vHit)
+    {
+    }
 }

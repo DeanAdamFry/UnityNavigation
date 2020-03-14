@@ -41,10 +41,10 @@ public class WayPointManager : MonoBehaviour
     {
         Vector3 tDestination = Vector3.zero; //Default
         List<Waypoint> tList = Waypoints.ToList<Waypoint>();
-        tList.Sort((t1, t2) => {   //Sort Waypoints list by closest item
-            Vector3 tFirst = tDestination - t1.transform.position;
-            Vector3 tSecond = tDestination - t2.transform.position;
-            float tDifference = tSecond.magnitude  - tFirst.magnitude ; //Smallest distance
+        tList.Sort((t1, t2) => {   //Sort Waypoints list by closest item using Lamda function which is called for all items in the list to decide if to swap
+            Vector3 tFirst = tDestination - t1.transform.position; //Distance to Destination from first one
+            Vector3 tSecond = tDestination - t2.transform.position; //Distance to Destination from second one
+            float tDifference = tSecond.magnitude  - tFirst.magnitude ; // +ve means 1st bigger than 2nd -ve means 1st smaller than second 
             return Math.Sign(tDifference);
         }
 );
