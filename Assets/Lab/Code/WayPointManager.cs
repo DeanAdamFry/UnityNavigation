@@ -13,6 +13,9 @@ public class WayPointManager : MonoBehaviour
     Waypoint[] Waypoints;
 
     int mCurrent = 0;
+    
+    Waypoint mCurrentWP;
+
 
     public Vector3 NextWaypoint()
     {
@@ -20,7 +23,8 @@ public class WayPointManager : MonoBehaviour
         if (Waypoints.Length > 0)
         {
 
-            tDestination = Waypoints[mCurrent].transform.position;
+            mCurrentWP = Waypoints[mCurrent];
+            tDestination = mCurrentWP.transform.position;
             mCurrent = (mCurrent + 1) % Waypoints.Length; //Next waypoint & loop at end of array
         }
         return tDestination;
@@ -31,8 +35,8 @@ public class WayPointManager : MonoBehaviour
         Vector3 tDestination = Vector3.zero; //Default
         if (Waypoints.Length > 0)
         {
-
-            tDestination = Waypoints[UnityEngine.Random.Range(0,Waypoints.Length)].transform.position;
+            mCurrentWP = Waypoints[UnityEngine.Random.Range(0, Waypoints.Length)];
+            tDestination = mCurrentWP.transform.position;
         }
         return tDestination;
     }
@@ -48,7 +52,16 @@ public class WayPointManager : MonoBehaviour
             return Math.Sign(tDifference);
         }
 );
-        return tList[0].transform.position; //Return closest
+        foreach(Waypoint tNearWp in Waypoints) //return closest waypoint other than the one we are on
+        {
+            if(tNearWp!=mCurrentWP)
+            {
+                mCurrentWP = tNearWp;
+                return mCurrentWP.transform.position;
+            }
+        }
+        return Vector3.zero;
     }
+
 
 }
